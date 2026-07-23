@@ -728,10 +728,12 @@
             </div>
             <script>
               window.addEventListener('message', function(e) {
-                if (e.data && e.data.sentinel === 'ops-platform' && e.data.type === 'resize') {
+                if (e.data && e.data.sentinel === 'ops-platform') {
                   var iframe = document.getElementById('ops-platform-iframe') || document.querySelector('iframe[src*="plataforma"]');
-                  if (iframe && e.data.height) {
+                  if (e.data.type === 'resize' && iframe && e.data.height) {
                     iframe.style.height = (e.data.height + 10) + 'px';
+                  } else if (e.data.type === 'scroll-top' && iframe) {
+                    iframe.scrollIntoView({ behavior: 'smooth', block: 'start' });
                   }
                 }
               });
